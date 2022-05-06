@@ -10,6 +10,7 @@ main {
   margin-top: 1.25rem;
   color: #212121;
   width: 80%;
+  max-width: 60rem;
   border-radius: 0.6rem;
   box-shadow: 0 0.3rem 0.7rem #bdbdbd;
   background: linear-gradient(to bottom, #e6dada 0%, #274046 100%);
