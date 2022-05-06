@@ -40,18 +40,18 @@ button {
 form {
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 85%;
   height: 2.8rem;
 }
 #btn {
   border: none;
   width: 25%;
-  border-radius: 1rem;
+  border-radius: 0.6rem;
 }
 #input {
   border: none;
   width: 70%;
-  border-radius: 1rem;
+  border-radius: 0.6rem;
   padding-inline-start: 1rem;
   padding-inline-end: 1rem;
 }
@@ -85,11 +85,11 @@ form {
   width: 80%;
 }
 .display-row {
-  /* background: linear-gradient(to top, #d3cce3 0%, #e9e4f0 100%) !important; */
-  background-color: #cfd8dc !important;
+  background: linear-gradient(to top, #d3cce3 0%, #e9e4f0 100%) !important;
+  /* background-color: #cfd8dc !important; */
 }
 .list-item:nth-child(2n-4) {
-  background-color: #f0f0f0;
+  background-color: #e4e4e4;
 }
 .list-item:nth-child(2n-3) {
   background-color: #fefefe;

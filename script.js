@@ -24,7 +24,7 @@ addBtn.addEventListener("click", function (e) {
   e.preventDefault();
   if (textbox.value === "" || textbox.value.trim() === "") {
     textbox.value = "";
-    window.alert("Wrong Entry");
+    window.alert("🛑 Invalid Entry.");
   } else {
     const listItem = document.createElement("div");
     listItem.innerHTML = `
