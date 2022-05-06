@@ -9,7 +9,7 @@ main {
   margin: auto;
   margin-top: 1.25rem;
   color: #212121;
-  width: 44rem;
+  width: 80%;
   border-radius: 0.6rem;
   box-shadow: 0 0.3rem 0.7rem #bdbdbd;
   background: linear-gradient(to bottom, #e6dada 0%, #274046 100%);
@@ -39,17 +39,17 @@ button {
 form {
   display: flex;
   justify-content: space-between;
-  width: 32rem;
+  width: 80%;
   height: 2.8rem;
 }
 #btn {
   border: none;
-  width: 9.5rem;
+  width: 25%;
   border-radius: 1rem;
 }
 #input {
   border: none;
-  width: 21rem;
+  width: 70%;
   border-radius: 1rem;
   padding-inline-start: 1rem;
   padding-inline-end: 1rem;
@@ -62,7 +62,7 @@ form {
   letter-spacing: 0.125rem;
 }
 .list-item {
-  width: 32rem;
+  width: 100%;
   margin: 0;
   padding: 0.625rem 0.625rem 0.625rem 1.25rem;
   margin-bottom: 0.625rem;
@@ -81,6 +81,7 @@ form {
 }
 .to-do-list {
   margin-bottom: 1.25rem;
+  width: 80%;
 }
 .display-row {
   /* background: linear-gradient(to top, #d3cce3 0%, #e9e4f0 100%) !important; */
