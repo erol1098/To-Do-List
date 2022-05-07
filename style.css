@@ -25,14 +25,12 @@ header {
   padding: 1.25rem;
   background: linear-gradient(to bottom, #606c88 0%, #3f4c6b 100%);
   border-radius: 0.7rem 0.7rem 0 0;
-  border: 0.06rem solid #cfd8dc;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   align-items: center;
   justify-content: space-between;
 }
-
 button {
   background-color: inherit;
   border: none;
