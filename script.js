@@ -1,69 +1,110 @@
 "use strict";
 
-const textbox = document.querySelector("#input");
-const addBtn = document.querySelector("#btn");
+const textbox = document.getElementById("input");
+const addBtn = document.getElementById("add-btn");
 const list = document.querySelector(".to-do-list");
 const done = document.querySelector(".done");
 const listItem = document.querySelector(".list-item");
-const del = document.querySelectorAll(".delete");
+const del = document.querySelectorAll(".del");
+let completed = 0;
 
-// Storing Counter
-let counter;
-localStorage.getItem("counter")
-  ? (counter = localStorage.getItem("counter"))
-  : (counter = 0);
+//* Create Key
+const generateKey = function () {
+  // Create current date and time
+  const now = new Date();
+  const options = {
+    second: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+  };
+  return new Intl.DateTimeFormat("TR", options).format(now);
+};
 
 // Reading from localStorage
-Object.keys(localStorage)
-  .filter((key) => key !== "counter")
-  .forEach((key) => {
-    const savedItems = document.createElement("div");
-    savedItems.innerHTML = `
-    <button class="done hide">✓</button><p class="text">${localStorage.getItem(
-      key
-    )}</p>
-    <button class="delete">✕</button>`;
-    savedItems.setAttribute("data-id", key);
-    list.append(savedItems);
-    savedItems.classList.add("list-item");
-  });
+Object.keys(localStorage).forEach((key) => {
+  const savedItems = document.createElement("section");
+  savedItems.innerHTML = `<button class="done col-1 btn border-0 py-3 invisible">🎯</button>
+  <input
+    type="text"
+    id="input"
+    class="form-control col-10 border-0 bg-white text-center"
+    value="${localStorage.getItem(key)}"
+    readonly
+  />
+  <button
+    class="del col-1 btn border-0  py-3"
+    type="button"
+    
+  >
+    ❌
+  </button>`;
 
-list.addEventListener("click", (e) => {
-  const parent = e.target.parentElement;
-  if (e.target.classList.contains("delete")) {
-    localStorage.removeItem(parent.dataset.id);
-    parent.remove();
-  } else {
-    const parent = e.target.closest(".list-item");
-    parent.classList.toggle("display-row");
-    parent.querySelector(".text").classList.toggle("display-text");
-    parent.querySelector(".done").classList.toggle("hide");
-  }
+  savedItems.setAttribute("data-id", key);
+  savedItems.classList.add("list-item", "row", "input-group", "mb-3");
+  list.append(savedItems);
 });
 
+const progress = function () {
+  const total = localStorage.length;
+  document.querySelector(".progress-bar").style.width = `${
+    (completed / total) * 100
+  }%`;
+  document.querySelector(
+    ".progress-title"
+  ).textContent = `${completed} out of ${total} tasks completed`;
+};
+
+progress();
 addBtn.addEventListener("click", function (e) {
-  e.preventDefault();
   if (textbox.value === "" || textbox.value.trim() === "") {
     textbox.value = "";
     window.alert("🛑 Invalid Entry.");
   } else {
-    const listItem = document.createElement("div");
-    listItem.innerHTML = `
-  <button class="done hide">✓</button><p class="text">${textbox.value}</p>
-  <button class="delete">✕</button>`;
-    list.append(listItem);
+    const key = generateKey();
+    const listItem = document.createElement("section");
+    listItem.innerHTML = `<button class="done col-1 btn border-0 py-3 invisible">🎯</button>
+  <input
+    type="text"
+    id="input"
+    class="form-control col-10 border-0 bg-white text-center"
+    value="${textbox.value}"
+    readonly
+  />
+  <button
+    class="del col-1 btn border-0  py-3"
+    type="button"
+   
+  >
+    ❌
+  </button>`;
 
-    localStorage.setItem(
-      `toDo${++counter} ${new Date().toLocaleDateString()}`,
-      textbox.value
-    );
+    localStorage.setItem(key, textbox.value);
     textbox.value = "";
-
-    listItem.setAttribute(
-      "data-id",
-      `toDo${counter} ${new Date().toLocaleDateString()}`
-    );
-    listItem.classList.add("list-item");
+    listItem.setAttribute("data-id", key);
+    listItem.classList.add("list-item", "row", "input-group", "mb-3");
+    list.append(listItem);
+    progress();
   }
-  localStorage.setItem("counter", counter);
 });
+list.addEventListener("click", (e) => {
+  const parent = e.target.closest(".list-item");
+  if (e.target.classList.contains("del")) {
+    localStorage.removeItem(parent.dataset.id);
+    parent.remove();
+    progress();
+  } else {
+    e.target.classList.toggle("text-decoration-line-through");
+    parent.querySelector(".done").classList.toggle("invisible");
+    if (parent.querySelector(".done").classList.contains("invisible")) {
+      completed--;
+    } else {
+      completed++;
+    }
+
+    progress();
+  }
+});
+progress();

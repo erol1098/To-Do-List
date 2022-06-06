@@ -1,104 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Righteous", cursive;
+.primary-color {
+  color: #ff4858;
 }
-main {
-  margin: auto;
-  margin-top: 1.25rem;
-  color: #212121;
-  width: 80%;
-  max-width: 60rem;
-  border-radius: 0.6rem;
-  box-shadow: 0 0.3rem 0.7rem #bdbdbd;
-  background: linear-gradient(to bottom, #e6dada 0%, #274046 100%);
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-  justify-content: space-between;
+.secondary-color1 {
+  color: #1b7f79;
 }
-header {
-  width: 100%;
-  padding: 1.25rem;
-  background: linear-gradient(to bottom, #606c88 0%, #3f4c6b 100%);
-  border-radius: 0.7rem 0.7rem 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-  justify-content: space-between;
+.secondary-color2 {
+  color: #00ccc0;
 }
-button {
-  background-color: inherit;
-  border: none;
+.secondary-color3 {
+  color: #72f2eb;
 }
-form {
-  display: flex;
-  justify-content: space-between;
-  width: 85%;
-  height: 2.8rem;
+.text-color {
+  color: #747f7f;
 }
-#btn {
-  border: none;
-  width: 25%;
-  border-radius: 0.6rem;
-}
-#input {
-  border: none;
-  width: 70%;
-  border-radius: 0.6rem;
-  padding-inline-start: 1rem;
-  padding-inline-end: 1rem;
-}
-#input:focus {
-  outline: none;
-}
-.title {
-  color: #fff;
-  letter-spacing: 0.125rem;
-}
-.list-item {
-  width: 100%;
-  margin: 0;
-  padding: 0.625rem 0.625rem 0.625rem 1.25rem;
-  margin-bottom: 0.625rem;
-  border-radius: 0.625rem;
-  display: grid;
-  grid-template-columns: 1.25rem 1fr 1.25rem;
-  column-gap: 1rem;
-  align-items: center;
-  justify-items: start;
-  box-shadow: 0 0.125rem 0.3rem #b3b3b3;
-  word-break: break-all;
-  word-wrap: break-word;
-}
-.done {
-  color: #000;
-}
-.to-do-list {
-  margin-bottom: 1.25rem;
-  width: 80%;
-}
-.display-row {
-  background: linear-gradient(to top, #d3cce3 0%, #e9e4f0 100%) !important;
-  /* background-color: #cfd8dc !important; */
-}
-.list-item:nth-child(2n-4) {
-  background-color: #e4e4e4;
-}
-.list-item:nth-child(2n-3) {
-  background-color: #fefefe;
-}
-.display-text {
-  text-decoration: line-through;
-  background-color: inherit;
-}
-.list-item:hover {
-  background-color: #cfd8dc;
-}
-.hide {
-  visibility: hidden;
-}
+

@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="./indir.png" type="image/x-icon" />
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>To-Do List</title>
-  </head>
+    <link rel="shortcut icon" href="./logo.png" type="image/x-icon">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="test.css" />  
   <body>
-    <main>
-      <header>
-        <section class="banner">
-          <h1 class="title">To-Do List</h1>
-        </section>
-        <form action="#" method="get">
-          <input
-            type="text"
-            name="input"
-            id="input"
-            placeholder="What will you do today?"
-          />
-          <input type="button" value="Add" id="btn" />
-        </form>
+  </head>
+
+    <div class="container">
+      <header class="row input-group mb-3 my-5">
+        <input
+          type="text"
+          id="input"
+          class="form-control col-12 col-md-9 rounded-2 py-3"
+          placeholder="What Will You Today?"
+        />
+        <button
+          class="col-12 col-md-3 btn btn-success rounded-2 py-3"
+          type="button"
+          id="add-btn"
+        >
+          Add
+        </button>
       </header>
-      <section class="to-do-list"></section>
-    </main>
+
+      <main class="to-do-list">
+        <!-- Entries Goes Here -->
+      </main>
+      <section class="row">
+        <div class="progress">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            style="width: 0%"
+          ></div>
+        </div>
+        <p class="progress-title text-center lead mt-3">
+          0 out of 10 tasks completed
+        </p>
+      </section>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
     <script src="./script.js"></script>
   </body>
 </html>
