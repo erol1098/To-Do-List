@@ -1,16 +1,54 @@
-.primary-color {
-  color: #ff4858;
-}
-.secondary-color1 {
-  color: #1b7f79;
-}
-.secondary-color2 {
-  color: #00ccc0;
-}
-.secondary-color3 {
-  color: #72f2eb;
-}
-.text-color {
-  color: #747f7f;
+@font-face {
+  font-family: "EraserDust";
+
+  src: url("./font/EraserDust.ttf") format("truetype");
 }
 
+.test {
+  background-image: url(./img/background.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "EraserDust";
+  color: #fff;
+  font-size: 3rem;
+}
+#input {
+  font-size: 2rem;
+  color: #747f7f;
+}
+#add-btn {
+  font-size: 2rem;
+  background-color: #1b7f79;
+  color: #fff;
+  cursor: pointer;
+}
+
+.list-item {
+  background-color: inherit;
+
+  word-wrap: break-word;
+}
+.progress-title {
+  font-size: 3rem;
+  color: #00ccc0;
+}
+
+.del {
+  color: #ff4858;
+  background-image: url("./img/cross.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.done {
+  font-size: 5rem;
+  color: #1b7f79;
+  background-image: url("./img/tick.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.progress-bar {
+  background-color: #ff4858;
+}
