@@ -3,15 +3,16 @@
 
   src: url("./font/EraserDust.ttf") format("truetype");
 }
-
-.test {
+body {
   background-image: url(./img/background.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   font-family: "EraserDust";
   color: #fff;
-  font-size: 3rem;
+}
+h1 {
+  color: #00ccc0;
 }
 #input {
   font-size: 2rem;
@@ -23,17 +24,10 @@
   color: #fff;
   cursor: pointer;
 }
-
 .list-item {
-  background-color: inherit;
-
+  font-size: 2.3rem;
   word-wrap: break-word;
 }
-.progress-title {
-  font-size: 3rem;
-  color: #00ccc0;
-}
-
 .del {
   color: #ff4858;
   background-image: url("./img/cross.svg");
@@ -49,6 +43,16 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+.progress {
+  height: 2rem;
+}
 .progress-bar {
   background-color: #ff4858;
+}
+.progress-title {
+  font-size: 2.3rem;
+  color: #00ccc0;
+}
+q {
+  font-size: 1.5rem;
 }
