@@ -1,4 +1,6 @@
 "use strict";
+//* For fixing older version
+localStorage.removeItem("counter");
 
 const textbox = document.getElementById("input");
 const addBtn = document.getElementById("add-btn");
@@ -11,13 +13,16 @@ const progressBar = document.querySelector(".progress-grp");
 let comp = 0;
 const quotes = [
   `A man who does not plan long ahead will find trouble at his door. – Confucius`,
-
   `I ain’t Martin Luther King. I don’t need a dream. I have a plan. -
 Spike Lee`,
   `By Failing to prepare, you are preparing to fail. – Benjamin Franklin`,
   `If you don’t know where you are going, you’ll end up someplace else. – Yogi Berra`,
   `The time to repair the roof is when the sun is shining. – John F. Kennedy`,
   `Always plan ahead. It wasn’t raining when Noah built the ark. – Richard Cushing`,
+  `A goal without a plan is just a wish. - Antoine de Saint-Exupéry`,
+  `Plans are of little importance, but planning is essential. - Winston Churchill`,
+  `Plans are nothing; planning is everything. - Dwight D. Eisenhower`,
+  `Good fortune is what happens when opportunity meets with planning. - Thomas Edison`,
 ];
 
 //* Create Key
