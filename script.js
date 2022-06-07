@@ -95,7 +95,7 @@ addBtn.addEventListener("click", function (e) {
     const listItem = document.createElement("section");
     listItem.innerHTML = `
     <button class="done col-1 btn border-0 py-2 invisible"></button>
-    <p class=" col-10 border-0">${textbox.value}</p>
+    <p class="line col-10 border-0">${textbox.value}</p>
     <button class="del col-1 btn border-0  py-2" type="button"></button>`;
 
     localStorage.setItem(key, textbox.value);
