@@ -8,7 +8,7 @@ const listItem = document.querySelector(".list-item");
 const del = document.querySelectorAll(".del");
 const quote = document.querySelector("q");
 const progressBar = document.querySelector(".progress-grp");
-let completed = 0;
+let comp = 0;
 const quotes = [
   `A man who does not plan long ahead will find trouble at his door. – Confucius`,
 
@@ -34,39 +34,53 @@ const generateKey = function () {
   };
   return new Intl.DateTimeFormat("TR", options).format(now);
 };
-
-// Reading from localStorage
-Object.keys(localStorage).forEach((key) => {
-  const savedItems = document.createElement("section");
-  savedItems.innerHTML = `
-  <button class="done col-1 btn border-0 py-3 invisible"></button>
-  <p class=" col-10 border-0 ">${localStorage.getItem(key)}</p>
-  <button class="del col-1 btn border-0  py-3" type="button"></button>`;
-  savedItems.setAttribute("data-id", key);
-  savedItems.classList.add("list-item", "row", "input-group", "mb-3");
-  list.append(savedItems);
-});
-
-const progress = function () {
-  readDone();
+const progress = function (completed) {
   const total = localStorage.length;
   total === 0
     ? progressBar.classList.add("invisible")
     : progressBar.classList.remove("invisible");
   document.querySelector(".progress-bar").style.width = `${
-    (completed / total) * 100
+    (completed / localStorage.length) * 100
   }%`;
   document.querySelector(
     ".progress-title"
-  ).textContent = `${completed} out of ${total} tasks completed`;
+  ).textContent = `${comp} out of ${total} tasks completed`;
 };
 
 const readDone = function () {
-  completed = 0;
-  document
-    .querySelectorAll(".list-item")
-    .forEach((item) => item.hasAttribute("data-done") && completed++);
+  let counter = 0;
+  document.querySelectorAll(".list-item").forEach((item) => {
+    item.getAttribute("data-done") ? counter++ : counter;
+  });
+  return counter;
 };
+
+// Reading from localStorage
+Object.keys(localStorage).forEach((key) => {
+  const savedItems = document.createElement("section");
+  let temp;
+  if (localStorage.getItem(key).startsWith("* ")) {
+    comp++;
+    progress(comp);
+    temp = localStorage.getItem(key).slice(2);
+    savedItems.innerHTML = `
+  <button class="done col-1 btn border-0 py-3"></button>
+  <p class="col-10 border-0 text-decoration-line-through">${temp}</p>
+  <button class="del col-1 btn border-0 py-3" type="button"></button>`;
+    savedItems.setAttribute("data-done", "done");
+  } else {
+    temp = localStorage.getItem(key);
+    savedItems.innerHTML = `
+  <button class="done col-1 btn border-0 py-3 invisible"></button>
+  <p class=" col-10 border-0 ">${temp}</p>
+  <button class="del col-1 btn border-0  py-3" type="button"></button>`;
+  }
+
+  savedItems.setAttribute("data-id", key);
+  savedItems.classList.add("list-item", "row", "input-group", "mb-3");
+  list.append(savedItems);
+});
+
 addBtn.addEventListener("click", function (e) {
   if (textbox.value === "" || textbox.value.trim() === "") {
     textbox.value = "";
@@ -84,28 +98,43 @@ addBtn.addEventListener("click", function (e) {
     listItem.setAttribute("data-id", key);
     listItem.classList.add("list-item", "row", "input-group", "mb-3");
     list.append(listItem);
-    progress();
+    comp = readDone();
+    progress(comp);
   }
 });
+
 list.addEventListener("click", (e) => {
+  //* Delete Row
   const parent = e.target.closest(".list-item");
   if (e.target.classList.contains("del")) {
     localStorage.removeItem(parent.dataset.id);
     parent.remove();
-    progress();
-  } else {
+    comp = readDone();
+    progress(comp);
+  }
+  //* Done and saving done to local storage
+  else {
     e.target.classList.toggle("text-decoration-line-through");
     parent.querySelector(".done").classList.toggle("invisible");
     if (parent.querySelector(".done").classList.contains("invisible")) {
       parent.removeAttribute("data-done");
+      localStorage.setItem(
+        parent.dataset.id,
+        localStorage.getItem(parent.dataset.id).slice(2)
+      );
     } else {
       parent.setAttribute("data-done", "done");
+      localStorage.setItem(
+        parent.dataset.id,
+        "* " + localStorage.getItem(parent.dataset.id)
+      );
     }
-
-    progress();
+    comp = readDone();
+    progress(comp);
   }
 });
-progress();
+comp = readDone();
+progress(comp);
 
 quote.textContent =
   quotes[[Math.floor(Math.random() * quotes.length)]].toUpperCase();
