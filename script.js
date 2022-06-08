@@ -70,7 +70,7 @@ Object.keys(localStorage).forEach((key) => {
     temp = localStorage.getItem(key).slice(2);
     savedItems.innerHTML = `
   <button class="done col-1 btn border-0 py-3"></button>
-  <p class="line col-10 border-0 text-decoration-line-through">${temp}</p>
+  <p class="line col-10 border-0 text-decoration-line-through gray">${temp}</p>
   <button class="del col-1 btn border-0 py-3" type="button"></button>`;
     savedItems.setAttribute("data-done", "done");
   } else {
@@ -120,6 +120,7 @@ list.addEventListener("click", (e) => {
   //* Done and saving done to local storage
   else if (e.target.classList.contains("line")) {
     e.target.classList.toggle("text-decoration-line-through");
+    e.target.classList.toggle("gray");
     parent.querySelector(".done").classList.toggle("invisible");
     if (parent.querySelector(".done").classList.contains("invisible")) {
       parent.removeAttribute("data-done");
