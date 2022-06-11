@@ -142,7 +142,7 @@ const addItem = function () {
     const listItem = document.createElement("section");
     listItem.innerHTML = `
     <button class="done col-1 btn border-0 py-2 invisible"></button>
-    <input type="text" class="line col-9 border  border-0"  value =${textbox.value} readonly />
+    <input type="text" class="line col-9 border  border-0"  value ="${textbox.value}" readonly />
     <button class="ok col-1 btn border-0 py-3 d-none" type="button"></button>
     <button class="edit col-1 btn border-0 py-3" type="button"></button>
     <button class="del col-1 btn border-0  py-2" type="button"></button>`;
