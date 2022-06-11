@@ -101,7 +101,7 @@ window.onload = function () {
     if (isDone) {
       savedItems.innerHTML = `
           <button class="done col-1 btn border-0 py-3"></button>
-          <input type="text" class="line col-9 border-0 text-decoration-line-through gray" value=${entry} readonly/>
+          <input type="text" class="line col-9 border-0 text-decoration-line-through gray" value="${entry}" readonly/>
           <button class="edit col-1 btn border-0 py-3" type="button"></button>
           <button class="ok col-1 btn border-0 py-3 d-none" type="button"></button>
           <button class="del col-1 btn border-0 py-3" type="button"></button>`;
@@ -110,7 +110,7 @@ window.onload = function () {
       savedItems.innerHTML = `
       
           <button class="done col-1 btn border-0 py-3 invisible"></button>
-          <input type="text" class="line col-9 border  border-0"  value =${entry} readonly/>
+          <input type="text" class="line col-9 border  border-0"  value ="${entry}" readonly/>
           <button class="ok col-1 btn border-0 py-3 d-none" type="button"></button>
           <button class="edit col-1 btn border-0 py-3" type="button"></button>
           <button class="del col-1 btn border-0  py-3" type="button"></button>`;
@@ -121,6 +121,7 @@ window.onload = function () {
       "row",
       "input-group",
       "mb-3",
+      "col-10",
       "align-items-center",
       "justify-content-evenly"
     );
@@ -162,7 +163,14 @@ const addItem = function () {
     }
     textbox.value = "";
     listItem.setAttribute("data-id", key);
-    listItem.classList.add("list-item", "row", "input-group", "mb-3");
+    listItem.classList.add(
+      "list-item",
+      "row",
+      "input-group",
+      "mb-3",
+      "col-10",
+      "justify-content-evenly"
+    );
     list.append(listItem);
     progress();
   }
