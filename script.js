@@ -131,10 +131,10 @@ const addItem = function () {
   }
 };
 
-addBtn.onclick = () => addItem();
-// textbox.onkeydown = (e) => {
-//   setTimeout(() => (e.key === "Enter" ? addItem() : null), 501);
-// };
+addBtn.onclick = () => {
+  addItem();
+  textbox.focus();
+};
 textbox.onkeydown = (e) => (e.key === "Enter" ? addItem() : null);
 list.addEventListener("click", (e) => {
   //* Delete Row
