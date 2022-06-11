@@ -78,17 +78,25 @@ window.onload = function () {
     if (isDone) {
       savedItems.innerHTML = `
           <button class="done col-1 btn border-0 py-3"></button>
-          <p class="line col-10 border-0 text-decoration-line-through gray">${entry}</p>
+          <input type="text" class="line col-9 border-0 text-decoration-line-through gray" value=${entry} readonly/>
+          <button class="edit col-1 btn border-0 py-3" type="button"></button>
           <button class="del col-1 btn border-0 py-3" type="button"></button>`;
       savedItems.setAttribute("data-done", "done");
     } else {
       savedItems.innerHTML = `
           <button class="done col-1 btn border-0 py-3 invisible"></button>
-          <p class="line col-10 border-0 ">${entry}</p>
+          <input type="text" class="line col-9 border  border-0"  value =${entry} readonly />
+          <button class="edit col-1 btn border-0 py-3" type="button"></button>
           <button class="del col-1 btn border-0  py-3" type="button"></button>`;
     }
     savedItems.setAttribute("data-id", key);
-    savedItems.classList.add("list-item", "row", "input-group", "mb-3");
+    savedItems.classList.add(
+      "list-item",
+      "row",
+      "input-group",
+      "mb-3",
+      "align-items-center"
+    );
     list.append(savedItems);
   });
   textbox.focus();
@@ -106,7 +114,8 @@ const addItem = function () {
     const listItem = document.createElement("section");
     listItem.innerHTML = `
     <button class="done col-1 btn border-0 py-2 invisible"></button>
-    <p class="line col-10 border-0">${textbox.value}</p>
+    <p class="line col-9 border-0">${textbox.value}</p>
+    <button class="edit col-1 btn border-0 py-3" type="button"></button>
     <button class="del col-1 btn border-0  py-2" type="button"></button>`;
 
     if (!localStorage.getItem("todo-list1098")) {
@@ -149,13 +158,15 @@ list.addEventListener("click", (e) => {
     successAnimation();
   }
   //* Done and saving done to local storage
-  else if (e.target.classList.contains("line")) {
+  else if (
+    e.target.classList.contains("line") &&
+    parent.querySelector(".line").hasAttribute("readonly")
+  ) {
     let tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
     let item = tempRecord.filter((item) => item.id === parent.dataset.id);
     let currentRecord = tempRecord.filter(
       (item) => item.id !== parent.dataset.id
     );
-
     e.target.classList.toggle("text-decoration-line-through");
     e.target.classList.toggle("gray");
     parent.querySelector(".done").classList.toggle("invisible");
@@ -169,6 +180,11 @@ list.addEventListener("click", (e) => {
     currentRecord.push(item[0]);
     localStorage.setItem("todo-list1098", JSON.stringify(currentRecord));
     progress();
+  } else if (
+    e.target.classList.contains("edit") &&
+    !parent.hasAttribute("data-done")
+  ) {
+    parent.querySelector(".line").removeAttribute("readonly");
   }
 });
 

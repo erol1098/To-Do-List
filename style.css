@@ -37,19 +37,25 @@ h1 {
   word-wrap: break-word;
 }
 .del {
-  color: #ff4858;
-  background-image: url("./img/cross.svg");
+  background-image: url("./img/cross-svgrepo-com.svg");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  width: 2rem;
 }
 .done {
-  font-size: 5rem;
-  color: #1b7f79;
-  background-image: url("./img/tick.svg");
+  background-image: url("./img/tick-svgrepo-com.svg");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  width: 2rem;
+}
+.edit {
+  background-image: url("./img/edit.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 2rem;
 }
 .progress {
   height: 2rem;
@@ -70,4 +76,12 @@ q {
 .success-gif p {
   font-size: 3rem;
   color: #ff4858;
+}
+.line {
+  background: transparent;
+  border: none;
+  color: #fff;
+}
+input:focus {
+  outline: none;
 }
