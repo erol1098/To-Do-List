@@ -67,3 +67,7 @@ q {
 .gray {
   color: #dfdfdf;
 }
+.success-gif p {
+  font-size: 3rem;
+  color: #ff4858;
+}

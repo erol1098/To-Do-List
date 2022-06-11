@@ -60,9 +60,15 @@ const progress = function () {
     ".progress-title"
   ).textContent = `${completed} out of ${total} tasks completed`;
 };
-// Reading from localStorage
-// localStorage.getItem("todo-list1098")
-//   ?
+
+const successAnimation = function () {
+  if (JSON.parse(localStorage.getItem("todo-list1098")).length === 0) {
+    document.querySelector(".success-gif").classList.remove("d-none");
+    document.querySelector(".success-control").classList.add("d-none");
+  }
+};
+
+//* Reading from localStorage
 JSON.parse(localStorage.getItem("todo-list1098")).forEach((item) => {
   const key = item.id;
   const entry = item.entry;
@@ -85,7 +91,6 @@ JSON.parse(localStorage.getItem("todo-list1098")).forEach((item) => {
   savedItems.classList.add("list-item", "row", "input-group", "mb-3");
   list.append(savedItems);
 });
-// : null;
 
 addBtn.addEventListener("click", function (e) {
   if (textbox.value === "" || textbox.value.trim() === "") {
@@ -132,6 +137,7 @@ list.addEventListener("click", (e) => {
     localStorage.setItem("todo-list1098", JSON.stringify(tempRecord));
     parent.remove();
     progress();
+    successAnimation();
   }
   //* Done and saving done to local storage
   else if (e.target.classList.contains("line")) {
@@ -157,7 +163,11 @@ list.addEventListener("click", (e) => {
   }
 });
 
-progress();
+textbox.onfocus = function () {
+  document.querySelector(".success-gif").classList.add("d-none");
+  document.querySelector(".success-control").classList.remove("d-none");
+};
 
+progress();
 quote.textContent =
   quotes[[Math.floor(Math.random() * quotes.length)]].toUpperCase();

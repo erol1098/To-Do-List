@@ -20,39 +20,51 @@
         <input
           type="text"
           id="input"
-          class="col-12 col-md-9 border border-0 rounded-2 py-2"
+          class="col-10 offset-1 col-md-9 offset-md-0 border border-0 rounded-2 py-2"
           placeholder="what are you planning to do?"
         />
         <button
-          class="col-12 col-md-3 mt-2 m-md-0 border border-0 rounded-2"
+          class="col-10 offset-1 col-md-3 offset-md-0 mt-2 m-md-0 border border-0 rounded-2"
           type="button"
           id="add-btn"
         >
           Add
         </button>
       </header>
+      <div class="success-control">
+        <main class="to-do-list mt-3">
+          <!-- Entries Goes Here -->
+        </main>
+        <section class="row progress-grp">
+          <div class="progress">
+            <div
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              style="width: 0%"
+            ></div>
+          </div>
 
-      <main class="to-do-list mt-3">
-        <!-- Entries Goes Here -->
-      </main>
-      <section class="row progress-grp">
-        <div class="progress">
-          <div
-            class="progress-bar progress-bar-striped progress-bar-animated"
-            role="progressbar"
-            style="width: 0%"
-          ></div>
-        </div>
-        <p class="progress-title text-center lead mt-3">
-          0 out of 10 tasks completed
+          <p class="progress-title text-center lead mt-3">
+            0 out of 10 tasks completed
+          </p>
+        </section>
+
+        <p class="text-center px-2 mb-5">
+          <q
+            >I ain’t Martin Luther King. I don’t need a dream. I have a plan. -
+            Spike Lee</q
+          >
         </p>
-      </section>
+      </div>
     </div>
-
-    <p class="text-center px-2 mb-5">
-      <q></q>
-    </p>
-
+    <section class="row success-gif text-center mt-3 d-none">
+      <img
+        src="./img/success.gif"
+        alt="success"
+        class="col-10 offset-1 col-md-6 offset-md-3 mx-auto d-block img-fluid"
+      />
+      <p>You deserve a break, huh?</p>
+    </section>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
