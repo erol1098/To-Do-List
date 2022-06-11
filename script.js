@@ -97,7 +97,7 @@ window.onload = function () {
     quotes[[Math.floor(Math.random() * quotes.length)]].toUpperCase();
 };
 
-addBtn.addEventListener("click", function (e) {
+const addItem = function () {
   if (textbox.value === "" || textbox.value.trim() === "") {
     textbox.value = "";
     window.alert("🛑 Invalid Entry.");
@@ -129,7 +129,12 @@ addBtn.addEventListener("click", function (e) {
     list.append(listItem);
     progress();
   }
-});
+};
+
+addBtn.onclick = () => addItem();
+textbox.onkeydown = (e) => {
+  setTimeout(() => (e.key === "Enter" ? addItem() : null), 300);
+};
 
 list.addEventListener("click", (e) => {
   //* Delete Row
@@ -168,6 +173,7 @@ list.addEventListener("click", (e) => {
 });
 
 textbox.onclick = function () {
+  textbox.value = "";
   document.querySelector(".success-gif").classList.add("d-none");
   document.querySelector(".success-control").classList.remove("d-none");
 };
