@@ -40,7 +40,8 @@ const generateKey = function () {
   return new Intl.DateTimeFormat("TR", options).format(now);
 };
 const progress = function (completed) {
-  const total = localStorage.length;
+  const total = JSON.parse(localStorage.getItem("todo-list1098")).length;
+
   total === 0
     ? progressBar.classList.add("invisible")
     : progressBar.classList.remove("invisible");
@@ -137,29 +138,23 @@ list.addEventListener("click", (e) => {
   //* Done and saving done to local storage
   else if (e.target.classList.contains("line")) {
     let tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
-    tempRecord = tempRecord
-      .filter((item) => item.id !== parent.dataset.id)
-      .forEach();
+    let item = tempRecord.filter((item) => item.id === parent.dataset.id);
+    let currentRecord = tempRecord.filter(
+      (item) => item.id !== parent.dataset.id
+    );
 
     e.target.classList.toggle("text-decoration-line-through");
     e.target.classList.toggle("gray");
     parent.querySelector(".done").classList.toggle("invisible");
     if (parent.querySelector(".done").classList.contains("invisible")) {
       parent.removeAttribute("data-done");
-      tempRecord.push({
-        id: parent.dataset.id,
-        entry: textbox.value,
-        isDone: false,
-      });
+      item[0].isDone = false;
     } else {
       parent.setAttribute("data-done", "done");
-      tempRecord.push({
-        id: parent.dataset.id,
-        entry: textbox.value,
-        isDone: true,
-      });
+      item[0].isDone = true;
     }
-    localStorage.setItem("todo-list1098", JSON.stringify(tempRecord));
+    currentRecord.push(item[0]);
+    localStorage.setItem("todo-list1098", JSON.stringify(currentRecord));
     comp = readDone();
     progress(comp);
   }
