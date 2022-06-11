@@ -61,30 +61,30 @@ const readDone = function () {
 };
 
 // Reading from localStorage
-Object.keys(localStorage).forEach((key) => {
-  const savedItems = document.createElement("section");
-  let temp;
-  if (localStorage.getItem(key).startsWith("* ")) {
-    comp++;
-    progress(comp);
-    temp = localStorage.getItem(key).slice(2);
-    savedItems.innerHTML = `
-  <button class="done col-1 btn border-0 py-3"></button>
-  <p class="line col-10 border-0 text-decoration-line-through gray">${temp}</p>
-  <button class="del col-1 btn border-0 py-3" type="button"></button>`;
-    savedItems.setAttribute("data-done", "done");
-  } else {
-    temp = localStorage.getItem(key);
-    savedItems.innerHTML = `
-  <button class="done col-1 btn border-0 py-3 invisible"></button>
-  <p class="line col-10 border-0 ">${temp}</p>
-  <button class="del col-1 btn border-0  py-3" type="button"></button>`;
-  }
+localStorage.getItem("todo-list1098")
+  ? JSON.parse(localStorage.getItem("todo-list1098")).forEach((item) => {
+      const key = item.id;
+      const entry = item.entry;
+      const isDone = item.isDone;
+      const savedItems = document.createElement("section");
 
-  savedItems.setAttribute("data-id", key);
-  savedItems.classList.add("list-item", "row", "input-group", "mb-3");
-  list.append(savedItems);
-});
+      if (isDone) {
+        savedItems.innerHTML = `
+          <button class="done col-1 btn border-0 py-3"></button>
+          <p class="line col-10 border-0 text-decoration-line-through gray">${entry}</p>
+          <button class="del col-1 btn border-0 py-3" type="button"></button>`;
+        savedItems.setAttribute("data-done", "done");
+      } else {
+        savedItems.innerHTML = `
+          <button class="done col-1 btn border-0 py-3 invisible"></button>
+          <p class="line col-10 border-0 ">${entry}</p>
+          <button class="del col-1 btn border-0  py-3" type="button"></button>`;
+      }
+      savedItems.setAttribute("data-id", key);
+      savedItems.classList.add("list-item", "row", "input-group", "mb-3");
+      list.append(savedItems);
+    })
+  : null;
 
 addBtn.addEventListener("click", function (e) {
   if (textbox.value === "" || textbox.value.trim() === "") {
@@ -98,7 +98,21 @@ addBtn.addEventListener("click", function (e) {
     <p class="line col-10 border-0">${textbox.value}</p>
     <button class="del col-1 btn border-0  py-2" type="button"></button>`;
 
-    localStorage.setItem(key, textbox.value);
+    if (!localStorage.getItem("todo-list1098")) {
+      localStorage.setItem(
+        "todo-list1098",
+        JSON.stringify([{ id: key, entry: textbox.value, isDone: false }])
+      );
+    } else {
+      const tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
+      tempRecord.push({
+        id: key,
+        entry: textbox.value,
+        isDone: false,
+      });
+      localStorage.setItem("todo-list1098", JSON.stringify(tempRecord));
+    }
+
     textbox.value = "";
     listItem.setAttribute("data-id", key);
     listItem.classList.add("list-item", "row", "input-group", "mb-3");
@@ -112,29 +126,40 @@ list.addEventListener("click", (e) => {
   //* Delete Row
   const parent = e.target.closest(".list-item");
   if (e.target.classList.contains("del")) {
-    localStorage.removeItem(parent.dataset.id);
+    const tempRecord = JSON.parse(localStorage.getItem("todo-list1098")).filter(
+      (item) => item.id !== parent.dataset.id
+    );
+    localStorage.setItem("todo-list1098", JSON.stringify(tempRecord));
     parent.remove();
     comp = readDone();
     progress(comp);
   }
   //* Done and saving done to local storage
   else if (e.target.classList.contains("line")) {
+    let tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
+    tempRecord = tempRecord
+      .filter((item) => item.id !== parent.dataset.id)
+      .forEach();
+
     e.target.classList.toggle("text-decoration-line-through");
     e.target.classList.toggle("gray");
     parent.querySelector(".done").classList.toggle("invisible");
     if (parent.querySelector(".done").classList.contains("invisible")) {
       parent.removeAttribute("data-done");
-      localStorage.setItem(
-        parent.dataset.id,
-        localStorage.getItem(parent.dataset.id).slice(2)
-      );
+      tempRecord.push({
+        id: parent.dataset.id,
+        entry: textbox.value,
+        isDone: false,
+      });
     } else {
       parent.setAttribute("data-done", "done");
-      localStorage.setItem(
-        parent.dataset.id,
-        "* " + localStorage.getItem(parent.dataset.id)
-      );
+      tempRecord.push({
+        id: parent.dataset.id,
+        entry: textbox.value,
+        isDone: true,
+      });
     }
+    localStorage.setItem("todo-list1098", JSON.stringify(tempRecord));
     comp = readDone();
     progress(comp);
   }
