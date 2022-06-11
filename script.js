@@ -65,7 +65,6 @@ const successAnimation = function () {
     document.querySelector(".success-control").classList.add("d-none");
   }
 };
-
 const updateItem = function (parent) {
   let tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
   let item = tempRecord.filter((item) => item.id === parent.dataset.id);
@@ -73,7 +72,7 @@ const updateItem = function (parent) {
     (item) => item.id !== parent.dataset.id
   );
   item[0].entry = parent.querySelector("input").value;
-  currentRecord.push(item[0]);
+  currentRecord.unshift(item[0]);
 
   localStorage.setItem("todo-list1098", JSON.stringify(currentRecord));
 };
@@ -86,7 +85,7 @@ const doneItem = function (parent, bool) {
   );
   item[0].isDone = bool;
 
-  currentRecord.push(item[0]);
+  currentRecord.unshift(item[0]);
   localStorage.setItem("todo-list1098", JSON.stringify(currentRecord));
 };
 window.onload = function () {
@@ -109,8 +108,9 @@ window.onload = function () {
       savedItems.setAttribute("data-done", "done");
     } else {
       savedItems.innerHTML = `
+      
           <button class="done col-1 btn border-0 py-3 invisible"></button>
-          <input type="text" class="line col-9 border  border-0"  value =${entry} readonly />
+          <input type="text" class="line col-9 border  border-0"  value =${entry} readonly/>
           <button class="ok col-1 btn border-0 py-3 d-none" type="button"></button>
           <button class="edit col-1 btn border-0 py-3" type="button"></button>
           <button class="del col-1 btn border-0  py-3" type="button"></button>`;
@@ -121,7 +121,8 @@ window.onload = function () {
       "row",
       "input-group",
       "mb-3",
-      "align-items-center"
+      "align-items-center",
+      "justify-content-evenly"
     );
     list.append(savedItems);
   });
@@ -152,7 +153,7 @@ const addItem = function () {
       );
     } else {
       const tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
-      tempRecord.push({
+      tempRecord.unshift({
         id: key,
         entry: textbox.value,
         isDone: false,
