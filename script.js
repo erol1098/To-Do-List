@@ -30,8 +30,8 @@ Spike Lee`,
 //* Create Key
 const generateKey = function () {
   // Create current date and time
-  const now = new Date();
   const options = {
+    fractionalSecondDigits: 3,
     second: "numeric",
     hour: "numeric",
     minute: "numeric",
@@ -39,7 +39,7 @@ const generateKey = function () {
     month: "numeric",
     year: "numeric",
   };
-  return new Intl.DateTimeFormat("TR", options).format(now);
+  return new Intl.DateTimeFormat("TR", options).format(new Date());
 };
 const progress = function () {
   const total = JSON.parse(localStorage.getItem("todo-list1098")).length;
@@ -132,10 +132,10 @@ const addItem = function () {
 };
 
 addBtn.onclick = () => addItem();
-textbox.onkeydown = (e) => {
-  setTimeout(() => (e.key === "Enter" ? addItem() : null), 300);
-};
-
+// textbox.onkeydown = (e) => {
+//   setTimeout(() => (e.key === "Enter" ? addItem() : null), 501);
+// };
+textbox.onkeydown = (e) => (e.key === "Enter" ? addItem() : null);
 list.addEventListener("click", (e) => {
   //* Delete Row
   const parent = e.target.closest(".list-item");
