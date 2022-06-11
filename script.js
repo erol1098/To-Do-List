@@ -65,6 +65,30 @@ const successAnimation = function () {
     document.querySelector(".success-control").classList.add("d-none");
   }
 };
+
+const updateItem = function (parent) {
+  let tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
+  let item = tempRecord.filter((item) => item.id === parent.dataset.id);
+  let currentRecord = tempRecord.filter(
+    (item) => item.id !== parent.dataset.id
+  );
+  item[0].entry = parent.querySelector("input").value;
+  currentRecord.push(item[0]);
+
+  localStorage.setItem("todo-list1098", JSON.stringify(currentRecord));
+};
+
+const doneItem = function (parent, bool) {
+  let tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
+  let item = tempRecord.filter((item) => item.id === parent.dataset.id);
+  let currentRecord = tempRecord.filter(
+    (item) => item.id !== parent.dataset.id
+  );
+  item[0].isDone = bool;
+
+  currentRecord.push(item[0]);
+  localStorage.setItem("todo-list1098", JSON.stringify(currentRecord));
+};
 window.onload = function () {
   !localStorage.getItem("todo-list1098") &&
     localStorage.setItem("todo-list1098", "[]");
@@ -80,12 +104,14 @@ window.onload = function () {
           <button class="done col-1 btn border-0 py-3"></button>
           <input type="text" class="line col-9 border-0 text-decoration-line-through gray" value=${entry} readonly/>
           <button class="edit col-1 btn border-0 py-3" type="button"></button>
+          <button class="ok col-1 btn border-0 py-3 d-none" type="button"></button>
           <button class="del col-1 btn border-0 py-3" type="button"></button>`;
       savedItems.setAttribute("data-done", "done");
     } else {
       savedItems.innerHTML = `
           <button class="done col-1 btn border-0 py-3 invisible"></button>
           <input type="text" class="line col-9 border  border-0"  value =${entry} readonly />
+          <button class="ok col-1 btn border-0 py-3 d-none" type="button"></button>
           <button class="edit col-1 btn border-0 py-3" type="button"></button>
           <button class="del col-1 btn border-0  py-3" type="button"></button>`;
     }
@@ -114,7 +140,8 @@ const addItem = function () {
     const listItem = document.createElement("section");
     listItem.innerHTML = `
     <button class="done col-1 btn border-0 py-2 invisible"></button>
-    <p class="line col-9 border-0">${textbox.value}</p>
+    <input type="text" class="line col-9 border  border-0"  value =${textbox.value} readonly />
+    <button class="ok col-1 btn border-0 py-3 d-none" type="button"></button>
     <button class="edit col-1 btn border-0 py-3" type="button"></button>
     <button class="del col-1 btn border-0  py-2" type="button"></button>`;
 
@@ -162,29 +189,29 @@ list.addEventListener("click", (e) => {
     e.target.classList.contains("line") &&
     parent.querySelector(".line").hasAttribute("readonly")
   ) {
-    let tempRecord = JSON.parse(localStorage.getItem("todo-list1098"));
-    let item = tempRecord.filter((item) => item.id === parent.dataset.id);
-    let currentRecord = tempRecord.filter(
-      (item) => item.id !== parent.dataset.id
-    );
     e.target.classList.toggle("text-decoration-line-through");
     e.target.classList.toggle("gray");
     parent.querySelector(".done").classList.toggle("invisible");
     if (parent.querySelector(".done").classList.contains("invisible")) {
       parent.removeAttribute("data-done");
-      item[0].isDone = false;
+      doneItem(parent, false);
     } else {
       parent.setAttribute("data-done", "done");
-      item[0].isDone = true;
+      doneItem(parent, true);
     }
-    currentRecord.push(item[0]);
-    localStorage.setItem("todo-list1098", JSON.stringify(currentRecord));
     progress();
   } else if (
     e.target.classList.contains("edit") &&
     !parent.hasAttribute("data-done")
   ) {
     parent.querySelector(".line").removeAttribute("readonly");
+    parent.querySelector(".edit").classList.add("d-none");
+    parent.querySelector(".ok").classList.remove("d-none");
+  } else if (e.target.classList.contains("ok")) {
+    updateItem(parent);
+    parent.querySelector(".line").setAttribute("readonly", true);
+    parent.querySelector(".edit").classList.remove("d-none");
+    parent.querySelector(".ok").classList.add("d-none");
   }
 });
 

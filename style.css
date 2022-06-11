@@ -57,6 +57,13 @@ h1 {
   background-repeat: no-repeat;
   width: 2rem;
 }
+.ok {
+  background-image: url("./img/ok.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 2rem;
+}
 .progress {
   height: 2rem;
 }
