@@ -3,6 +3,12 @@
 
   src: url("./font/EraserDust.ttf") format("truetype");
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
 body {
   background-attachment: fixed;
   background-image: url(./img/background.png);

@@ -1,6 +1,9 @@
 "use strict";
-//* For fixing older version
+//* For fixing older version of Netlify
 localStorage.removeItem("counter");
+Object.keys(localStorage)
+  .filter((key) => key !== "todo-list1098")
+  .forEach((key) => localStorage.removeItem(key));
 
 const textbox = document.getElementById("input");
 const addBtn = document.getElementById("add-btn");
@@ -24,7 +27,8 @@ Spike Lee`,
   `Plans are nothing; planning is everything. - Dwight D. Eisenhower`,
   `Good fortune is what happens when opportunity meets with planning. - Thomas Edison`,
 ];
-
+!localStorage.getItem("todo-list1098") &&
+  localStorage.setItem("todo-list1098", "[]");
 //* Create Key
 const generateKey = function () {
   // Create current date and time
@@ -39,53 +43,49 @@ const generateKey = function () {
   };
   return new Intl.DateTimeFormat("TR", options).format(now);
 };
-const progress = function (completed) {
+const progress = function () {
   const total = JSON.parse(localStorage.getItem("todo-list1098")).length;
+  const completed = JSON.parse(localStorage.getItem("todo-list1098")).filter(
+    (item) => item.isDone === true
+  ).length;
 
   total === 0
     ? progressBar.classList.add("invisible")
     : progressBar.classList.remove("invisible");
+
   document.querySelector(".progress-bar").style.width = `${
-    (completed / localStorage.length) * 100
+    (completed / total) * 100
   }%`;
   document.querySelector(
     ".progress-title"
-  ).textContent = `${comp} out of ${total} tasks completed`;
+  ).textContent = `${completed} out of ${total} tasks completed`;
 };
-
-const readDone = function () {
-  let counter = 0;
-  document.querySelectorAll(".list-item").forEach((item) => {
-    item.getAttribute("data-done") ? counter++ : counter;
-  });
-  return counter;
-};
-
 // Reading from localStorage
-localStorage.getItem("todo-list1098")
-  ? JSON.parse(localStorage.getItem("todo-list1098")).forEach((item) => {
-      const key = item.id;
-      const entry = item.entry;
-      const isDone = item.isDone;
-      const savedItems = document.createElement("section");
+// localStorage.getItem("todo-list1098")
+//   ?
+JSON.parse(localStorage.getItem("todo-list1098")).forEach((item) => {
+  const key = item.id;
+  const entry = item.entry;
+  const isDone = item.isDone;
+  const savedItems = document.createElement("section");
 
-      if (isDone) {
-        savedItems.innerHTML = `
+  if (isDone) {
+    savedItems.innerHTML = `
           <button class="done col-1 btn border-0 py-3"></button>
           <p class="line col-10 border-0 text-decoration-line-through gray">${entry}</p>
           <button class="del col-1 btn border-0 py-3" type="button"></button>`;
-        savedItems.setAttribute("data-done", "done");
-      } else {
-        savedItems.innerHTML = `
+    savedItems.setAttribute("data-done", "done");
+  } else {
+    savedItems.innerHTML = `
           <button class="done col-1 btn border-0 py-3 invisible"></button>
           <p class="line col-10 border-0 ">${entry}</p>
           <button class="del col-1 btn border-0  py-3" type="button"></button>`;
-      }
-      savedItems.setAttribute("data-id", key);
-      savedItems.classList.add("list-item", "row", "input-group", "mb-3");
-      list.append(savedItems);
-    })
-  : null;
+  }
+  savedItems.setAttribute("data-id", key);
+  savedItems.classList.add("list-item", "row", "input-group", "mb-3");
+  list.append(savedItems);
+});
+// : null;
 
 addBtn.addEventListener("click", function (e) {
   if (textbox.value === "" || textbox.value.trim() === "") {
@@ -118,8 +118,7 @@ addBtn.addEventListener("click", function (e) {
     listItem.setAttribute("data-id", key);
     listItem.classList.add("list-item", "row", "input-group", "mb-3");
     list.append(listItem);
-    comp = readDone();
-    progress(comp);
+    progress();
   }
 });
 
@@ -132,8 +131,7 @@ list.addEventListener("click", (e) => {
     );
     localStorage.setItem("todo-list1098", JSON.stringify(tempRecord));
     parent.remove();
-    comp = readDone();
-    progress(comp);
+    progress();
   }
   //* Done and saving done to local storage
   else if (e.target.classList.contains("line")) {
@@ -155,12 +153,11 @@ list.addEventListener("click", (e) => {
     }
     currentRecord.push(item[0]);
     localStorage.setItem("todo-list1098", JSON.stringify(currentRecord));
-    comp = readDone();
-    progress(comp);
+    progress();
   }
 });
-comp = readDone();
-progress(comp);
+
+progress();
 
 quote.textContent =
   quotes[[Math.floor(Math.random() * quotes.length)]].toUpperCase();
