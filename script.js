@@ -13,7 +13,6 @@ const listItem = document.querySelector(".list-item");
 const del = document.querySelectorAll(".del");
 const quote = document.querySelector("q");
 const progressBar = document.querySelector(".progress-grp");
-let comp = 0;
 const quotes = [
   `A man who does not plan long ahead will find trouble at his door. – Confucius`,
   `I ain’t Martin Luther King. I don’t need a dream. I have a plan. -
@@ -27,8 +26,7 @@ Spike Lee`,
   `Plans are nothing; planning is everything. - Dwight D. Eisenhower`,
   `Good fortune is what happens when opportunity meets with planning. - Thomas Edison`,
 ];
-!localStorage.getItem("todo-list1098") &&
-  localStorage.setItem("todo-list1098", "[]");
+
 //* Create Key
 const generateKey = function () {
   // Create current date and time
@@ -67,30 +65,37 @@ const successAnimation = function () {
     document.querySelector(".success-control").classList.add("d-none");
   }
 };
+window.onload = function () {
+  !localStorage.getItem("todo-list1098") &&
+    localStorage.setItem("todo-list1098", "[]");
+  //* Reading from localStorage
+  JSON.parse(localStorage.getItem("todo-list1098")).forEach((item) => {
+    const key = item.id;
+    const entry = item.entry;
+    const isDone = item.isDone;
+    const savedItems = document.createElement("section");
 
-//* Reading from localStorage
-JSON.parse(localStorage.getItem("todo-list1098")).forEach((item) => {
-  const key = item.id;
-  const entry = item.entry;
-  const isDone = item.isDone;
-  const savedItems = document.createElement("section");
-
-  if (isDone) {
-    savedItems.innerHTML = `
+    if (isDone) {
+      savedItems.innerHTML = `
           <button class="done col-1 btn border-0 py-3"></button>
           <p class="line col-10 border-0 text-decoration-line-through gray">${entry}</p>
           <button class="del col-1 btn border-0 py-3" type="button"></button>`;
-    savedItems.setAttribute("data-done", "done");
-  } else {
-    savedItems.innerHTML = `
+      savedItems.setAttribute("data-done", "done");
+    } else {
+      savedItems.innerHTML = `
           <button class="done col-1 btn border-0 py-3 invisible"></button>
           <p class="line col-10 border-0 ">${entry}</p>
           <button class="del col-1 btn border-0  py-3" type="button"></button>`;
-  }
-  savedItems.setAttribute("data-id", key);
-  savedItems.classList.add("list-item", "row", "input-group", "mb-3");
-  list.append(savedItems);
-});
+    }
+    savedItems.setAttribute("data-id", key);
+    savedItems.classList.add("list-item", "row", "input-group", "mb-3");
+    list.append(savedItems);
+  });
+  textbox.focus();
+  progress();
+  quote.textContent =
+    quotes[[Math.floor(Math.random() * quotes.length)]].toUpperCase();
+};
 
 addBtn.addEventListener("click", function (e) {
   if (textbox.value === "" || textbox.value.trim() === "") {
@@ -118,7 +123,6 @@ addBtn.addEventListener("click", function (e) {
       });
       localStorage.setItem("todo-list1098", JSON.stringify(tempRecord));
     }
-
     textbox.value = "";
     listItem.setAttribute("data-id", key);
     listItem.classList.add("list-item", "row", "input-group", "mb-3");
@@ -163,11 +167,7 @@ list.addEventListener("click", (e) => {
   }
 });
 
-textbox.onfocus = function () {
+textbox.onclick = function () {
   document.querySelector(".success-gif").classList.add("d-none");
   document.querySelector(".success-control").classList.remove("d-none");
 };
-
-progress();
-quote.textContent =
-  quotes[[Math.floor(Math.random() * quotes.length)]].toUpperCase();
